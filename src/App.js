@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles/App.scss";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import ReactTooltip from "react-tooltip";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const FastCuratePage = lazy(() => import("./pages/FastCuratePage"));
+const LoadingPage = lazy(() => import("./pages/LoadingPage"));
+const NotFound = lazy(() => import("./pages/NotFoundPage"));
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Suspense fallback={<LoadingPage></LoadingPage>}></Suspense>
+        <Routes>
+          <Route path="/fastcurate" element={<FastCuratePage />} />
+          <Route path="/" element={<HomePage />}>
+            <Route path=":username" element={<HomePage />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+          <Route index element={<HomePage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+      <ReactTooltip class="tooltip" html={true} />
     </div>
   );
 }

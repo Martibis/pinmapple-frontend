@@ -1,0 +1,261 @@
+#home-page {
+    width: 100%;
+    height: 100%;
+    .code-mode-div {
+        position: fixed;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 5px;
+        box-sizing: border-box;
+        padding: 15px;
+        input {
+            display: block;
+            //border: none;
+            background-image: none;
+            background-color: rgba(255, 255, 255, 0.95);
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+            //TODO: load in this font
+            font-family: "Quicksand", sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            height: 40px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            pointer-events: all;
+            margin-bottom: 15px;
+        }
+        .info-text {
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .code-to-copy {
+            box-sizing: border-box;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            background-color: aliceblue;
+            width: 100%;
+        }
+        .code-to-copy:hover {
+            background-color: #fffbcc;
+            cursor: pointer;
+        }
+    }
+    .search-box {
+        position: fixed;
+        top: 10px;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        input {
+            display: block;
+            border: none;
+            background-image: none;
+            background-color: rgba(255, 255, 255, 0.95);
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            z-index: 1;
+            width: 45%;
+            text-align: center;
+            //TODO: load in this font
+            font-family: "Quicksand", sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            height: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+            pointer-events: all;
+        }
+    }
+    .pinmapple-with-text {
+        position: fixed;
+        bottom: -5px;
+        z-index: 100;
+        width: 175px;
+        left: 50%;
+        transform: translateX(-50%);
+        img {
+            width: 100%;
+        }
+    }
+    .buymeberries {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        height: 50px;
+        z-index: 100;
+        img {
+            height: 100%;
+        }
+    }
+    .nav-tools {
+        position: fixed;
+        display: flex;
+        z-index: 1;
+        top: 70px;
+        width: 45%;
+        left: 27.5%;
+        p {
+            display: inline-flex;
+            align-content: center;
+            justify-content: center;
+            font-family: "Quicksand", sans-serif;
+            margin-left: 5px;
+            margin-right: 5px;
+            box-sizing: border-box;
+            padding: 5px 10px 5px 10px;
+            color: white;
+            font-size: 0.75em;
+            font-weight: bold;
+            background-color: rgba(11, 11, 11, 0.75);
+            border-radius: 5px;
+        }
+        p:hover {
+            cursor: pointer;
+            background-color: rgba(11, 11, 11, 0.95);
+        }
+        .filler {
+            flex: 1;
+        }
+    }
+    .gm-style-iw {
+        max-width: 90vw !important;
+    }
+
+    .overlay-content {
+        background: white;
+        box-sizing: border-box;
+        padding: 5px;
+        //height: 200px;
+        min-height: 100px;
+        max-height: 200px;
+        width: 400px;
+        max-width: 100%;
+        //max-width: 90vw;
+        font-family: "Quicksand", sans-serif;
+        .post-summary {
+            display: flex;
+            flex-direction: row;
+            column-gap: 20px;
+            margin-bottom: 10px;
+            .image-link {
+                display: block;
+                width: 90px;
+                height: 90px;
+                min-width: 90px;
+                min-height: 90px;
+                background-color: rgb(242, 242, 242);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                color: black;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                p {
+                    text-align: center;
+                    font-size: 10px;
+                    box-sizing: border-box;
+                    padding: 5px;
+                }
+            }
+            .post-info {
+                overflow: hidden;
+                height: 90px;
+                display: flex;
+                flex-direction: column;
+                .title {
+                    font-weight: bold;
+                    width: 100%;
+                    overflow: hidden;
+                    margin-bottom: 4px;
+                    a {
+                        overflow: hidden;
+                        display: block;
+                        width: 100%;
+                        text-decoration: none;
+                        color: black;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                }
+                .description {
+                    overflow: hidden;
+                    p {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                    }
+                }
+                .extra-info {
+                    display: flex;
+                    font-size: 12px;
+                    flex: 1;
+                    column-gap: 10px;
+                    p {
+                        /* font-weight: bold; */
+                        align-self: flex-end;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    #home-page {
+        .search-box {
+            left: 10px;
+            align-items: unset;
+            justify-content: unset;
+            input {
+                margin: 0;
+                width: calc(100% - 70px);
+            }
+        }
+        .buymeberries {
+            left: unset;
+            right: 10px;
+            height: 40px;
+        }
+        .pinmapple-with-text {
+            width: 130px;
+        }
+        .nav-tools {
+            left: 0;
+            box-sizing: border-box;
+            padding: 0 10px;
+            width: 100%;
+            .filler {
+                flex: unset;
+            }
+        }
+    }
+}
