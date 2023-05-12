@@ -26,6 +26,8 @@ const PostSummary = (props) => {
         </div>
         <div className="extra-info">
           <p>{"@" + props.marker.username}</p>
+          <p>{(new Date(props.marker.postDate)).toDateString()}</p>
+
           {/* <p>{props.marker.postUpvote}</p>
           <p>{props.marker.postValue}</p> */}
         </div>
