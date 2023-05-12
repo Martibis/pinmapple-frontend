@@ -5,7 +5,7 @@ import { lazy, Suspense } from "react";
 import ReactTooltip from "react-tooltip";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const FastCuratePage = lazy(() => import("./pages/FastCuratePage"));
+// const FastCuratePage = lazy(() => import("./pages/FastCuratePage"));
 const LoadingPage = lazy(() => import("./pages/LoadingPage"));
 const NotFound = lazy(() => import("./pages/NotFoundPage"));
 
@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={<LoadingPage></LoadingPage>}></Suspense>
         <Routes>
-          <Route path="/fastcurate" element={<FastCuratePage />} />
+          {/* <Route path="/fastcurate" element={<FastCuratePage />} /> */}
           <Route path="/" element={<HomePage />}>
             <Route path=":username" element={<HomePage />} />
             <Route path="*" element={<NotFound />} />

@@ -16,6 +16,7 @@ import LoadingPage from "./LoadingPage";
 import axios from "axios";
 import PostSummary from "../components/PostSummary";
 import ReactTooltip from "react-tooltip";
+import FilterComponent from './../components/FilterComponent';
 
 const libraries = ["places"];
 
@@ -53,6 +54,9 @@ const HomePage = () => {
   const [searchParams, setSearchParams] = useState(
     params?.username ? { author: params.username } : { curated_only: true }
   );
+
+  const [showFilters, setShowFilters] = useState(false);
+
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
@@ -145,6 +149,17 @@ const HomePage = () => {
     mapRef.fitBounds(bounds);
   }
 
+  const handleFilter = filterData => {
+    console.log('Filter data:', filterData);
+    newSearchParams({
+      tags: filterData && filterData.tags && filterData.tags.length && filterData.tags[0] ? filterData.tags : [],
+      author: filterData ? filterData.username : '',
+      post_title: filterData ? filterData.postTitle : '',
+      start_date: filterData ? filterData.startDate: '',
+      end_date: filterData ? filterData.endDate : ''
+    });
+  };
+
   useEffect(() => {
     //TODO: make an axios post request to get all markers
     setMarkersLoading(true);
@@ -154,6 +169,7 @@ const HomePage = () => {
         searchParams
       )
       .then((resp) => {
+        console.log(resp.data.length);
         setMarkers(resp.data);
       })
       .catch((err) => {
@@ -280,7 +296,9 @@ const HomePage = () => {
         {codeMode ? (
           <></>
         ) : (
-          <p id="get-map-filters" data-tip="Coming soon">
+          <p id="get-map-filters" onClick={() => {
+            setShowFilters(!showFilters);
+          }}>
             filter the map
           </p>
         )}
@@ -289,6 +307,14 @@ const HomePage = () => {
           FAQ
         </p>
       </div>
+      {
+        showFilters ? (
+          <FilterComponent onFilter={handleFilter} />
+        ) : <></>
+      }
+      {
+        markersLoading ?  <div className="loader"></div>  : <></>
+      }
       {isLoaded ? (
         <GoogleMap
           /* onZoomChanged={() => {
