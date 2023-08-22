@@ -79,8 +79,10 @@ const FilterComponent = ({ onFilter }) => {
         />
       </div>
 
-      <button onClick={clearFilter}>Clear</button>
-      <button onClick={applyFilter}>Apply</button>
+      <div className='button-container'>
+        <button onClick={clearFilter}>Clear</button>
+        <button onClick={applyFilter}>Apply</button>
+      </div>
     </div>
   );
 };

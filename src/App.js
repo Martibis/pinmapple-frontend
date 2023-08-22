@@ -17,9 +17,10 @@ function App() {
         <Routes>
           {/* <Route path="/fastcurate" element={<FastCuratePage />} /> */}
           <Route path="/" element={<HomePage />}>
-            <Route path=":username" element={<HomePage />} />
+            <Route path="p/:permlink" element={<HomePage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
+          <Route path="@:username" element={<HomePage />} />
           <Route index element={<HomePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

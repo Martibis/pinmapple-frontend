@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import pinmappleWithText from "../assets/pinmapple-with-text.png";
+import pinmapple from "../assets/pinmapple.png";
 import location from "../assets/location.png";
 import "../styles/HomePage.scss";
 import { useParams } from "react-router-dom";
@@ -52,7 +53,7 @@ const HomePage = () => {
   const [clusterMarkersError, setClusterMarkersError] = useState(null);
 
   const [searchParams, setSearchParams] = useState(
-    params?.username ? { author: params.username } : { curated_only: true }
+    params?.username ? { author: params.username } : (params?.permlink ? { permlink: params.permlink } : { curated_only: true })
   );
 
   const [showFilters, setShowFilters] = useState(false);
@@ -68,7 +69,6 @@ const HomePage = () => {
   }
 
   async function markerClick(marker, id) {
-    console.log(marker);
     let position = {
       lat: marker.latLng.lat(),
       lng: marker.latLng.lng(),
@@ -76,7 +76,6 @@ const HomePage = () => {
     setClusterMarkers([]);
     setMapCenter({ lat: position.lat, lng: position.lng });
     setOverlayPos(position);
-    console.log(infoWindowRef);
     infoWindowRef.open(mapRef);
     let idsInCluster = [id];
 
@@ -106,7 +105,6 @@ const HomePage = () => {
     setClusterMarkers([]);
     setMapCenter({ lat: position.lat, lng: position.lng });
     setOverlayPos(position);
-    console.log(infoWindowRef);
     infoWindowRef.open(mapRef);
     let markers = cluster.getMarkers();
     let idsInCluster = [];
@@ -155,8 +153,10 @@ const HomePage = () => {
       tags: filterData && filterData.tags && filterData.tags.length && filterData.tags[0] ? filterData.tags : [],
       author: filterData ? filterData.username : '',
       post_title: filterData ? filterData.postTitle : '',
-      start_date: filterData ? filterData.startDate: '',
-      end_date: filterData ? filterData.endDate : ''
+      start_date: filterData ? filterData.startDate : '',
+      end_date: filterData ? filterData.endDate : '',
+      permlink: '',
+      curated_only: (filterData.permlink || filterData.username || filterData.postTitle) ? false : true
     });
   };
 
@@ -180,6 +180,24 @@ const HomePage = () => {
         setMarkersLoading(false);
       });
   }, [searchParams]);
+
+  useEffect(() => {
+    if (markerClustererRef) {
+      markerClustererRef.clearMarkers();
+      markerClustererRef.addMarkers(
+        markers.map(
+          (marker) =>
+            new window.google.maps.Marker({
+              position: {
+                lat: marker.lattitude,
+                lng: marker.longitude,
+              },
+              id: marker.id,
+            })
+        )
+      );
+    }
+  }, [markers])
 
   return (
     <div id="home-page">
@@ -218,12 +236,12 @@ const HomePage = () => {
               onClick={() => {
                 navigator.clipboard.writeText(
                   "[//]:# (!pinmapple " +
-                    codeModeMarker.lat.toFixed(5) +
-                    " lat " +
-                    codeModeMarker.lng.toFixed(5) +
-                    " long " +
-                    codeModeDescription +
-                    " d3scr)"
+                  codeModeMarker.lat.toFixed(5) +
+                  " lat " +
+                  codeModeMarker.lng.toFixed(5) +
+                  " long " +
+                  codeModeDescription +
+                  " d3scr)"
                 );
                 setCopiedToClipboard(true);
               }}
@@ -313,7 +331,12 @@ const HomePage = () => {
         ) : <></>
       }
       {
-        markersLoading ?  <div className="loader"></div>  : <></>
+        markersLoading ? <div className="loader-container">
+          <div className="loader">
+            <img src={pinmapple} alt="" />
+          </div>
+          <p>Getting pins...</p>
+        </div> : <></>
       }
       {isLoaded ? (
         <GoogleMap
