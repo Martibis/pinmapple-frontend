@@ -12,6 +12,8 @@ import {
   InfoWindow,
   OverlayView,
   StandaloneSearchBox,
+  MarkerF,
+  InfoWindowF,
 } from "@react-google-maps/api";
 import LoadingPage from "./LoadingPage";
 import axios from "axios";
@@ -53,7 +55,7 @@ const HomePage = () => {
   const [clusterMarkersError, setClusterMarkersError] = useState(null);
 
   const [searchParams, setSearchParams] = useState(
-    params?.username ? { author: params.username } : (params?.permlink ? { permlink: params.permlink } : { curated_only: true })
+    params?.username ? { author: params.username } : (params?.permlink ? { permlink: params.permlink } : (params?.tag ? { tags: [params?.tag] } : { curated_only: true }))
   );
 
   const [showFilters, setShowFilters] = useState(false);
@@ -382,8 +384,8 @@ const HomePage = () => {
               <input type="text" placeholder="Search a location" />
             </div>
           </StandaloneSearchBox>
-          <Marker position={codeModeMarker} visible={codeMode}></Marker>
-          <Marker
+          <MarkerF position={codeModeMarker} visible={codeMode}></MarkerF>
+          <MarkerF
             position={userLocation}
             icon={location}
             options={{
@@ -402,13 +404,14 @@ const HomePage = () => {
           >
             {(clusterer) =>
               markers.map((marker) => (
-                <Marker
+                <MarkerF
                   key={marker.id}
                   position={{ lat: marker.lattitude, lng: marker.longitude }}
                   clusterer={clusterer}
                   //Little trick to pass data
                   options={marker}
                   visible={!codeMode}
+                  clickable={true}
                   onClick={(m) => {
                     markerClick(m, marker.id);
                   }}

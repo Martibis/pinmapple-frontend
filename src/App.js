@@ -18,6 +18,7 @@ function App() {
           {/* <Route path="/fastcurate" element={<FastCuratePage />} /> */}
           <Route path="/" element={<HomePage />}>
             <Route path="p/:permlink" element={<HomePage />} />
+            <Route path="t/:tag" element={<HomePage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
           <Route path="@:username" element={<HomePage />} />

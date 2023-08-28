@@ -1,5 +1,4 @@
 const PostSummary = (props) => {
-  console.log(props);
   return (
     <div className={"post-summary"}>
       <a href={props.marker.postLink} target="blank" className="image-link">
