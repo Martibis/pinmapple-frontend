@@ -54,9 +54,7 @@ const HomePage = () => {
   const [clusterMarkersLoading, setClusterMarkersLoading] = useState(false);
   const [clusterMarkersError, setClusterMarkersError] = useState(null);
 
-  const [searchParams, setSearchParams] = useState(
-    params?.username ? { author: params.username } : (params?.permlink ? { permlink: params.permlink } : (params?.tag ? { tags: [params?.tag] } : { curated_only: true }))
-  );
+  const [searchParams, setSearchParams] = useState({ curated_only: true });
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -158,7 +156,7 @@ const HomePage = () => {
       start_date: filterData ? filterData.startDate : '',
       end_date: filterData ? filterData.endDate : '',
       permlink: '',
-      curated_only: (filterData.permlink || filterData.username || filterData.postTitle) ? false : true
+      curated_only: filterData.isCurated
     });
   };
 

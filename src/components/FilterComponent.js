@@ -6,6 +6,8 @@ const FilterComponent = ({ onFilter }) => {
   const [postTitle, setPostTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [isCurated, setIsCurated] = useState(true);
+
 
   const applyFilter = () => {
     onFilter({
@@ -13,7 +15,8 @@ const FilterComponent = ({ onFilter }) => {
       username,
       postTitle,
       startDate,
-      endDate
+      endDate,
+      isCurated
     });
   };
 
@@ -23,6 +26,7 @@ const FilterComponent = ({ onFilter }) => {
     setPostTitle('');
     setStartDate('');
     setEndDate('');
+    setIsCurated(true);
     onFilter(null);
   };
 
@@ -79,6 +83,18 @@ const FilterComponent = ({ onFilter }) => {
         />
       </div>
 
+      <div className="filter-group">
+        <label htmlFor="isCurated">Pinmapple Curated:</label>
+        <label className="switch">
+          <input
+            type="checkbox"
+            id="isCurated"
+            checked={isCurated}
+            onChange={e => setIsCurated(e.target.checked)}
+          />
+          <span className="slider"></span>
+        </label>
+      </div>
       <div className='button-container'>
         <button onClick={clearFilter}>Clear</button>
         <button onClick={applyFilter}>Apply</button>

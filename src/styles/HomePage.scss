@@ -237,6 +237,51 @@ border-radius: 50%; */
                 border-radius: 5px;
                 pointer-events: all;
             }
+
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 40px;
+                height: 20px;
+                vertical-align: middle;
+            }
+
+            .switch input {
+                display: none; /* Hide the default checkbox */
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc; /* Gray color by default */
+                transition: 0.4s; /* Smooth transition for the slide effect */
+                border-radius: 34px; /* Rounded corners */
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 15px;
+                width: 15px;
+                left: 2px;
+                bottom: 3px;
+                background-color: white; /* White circle by default */
+                transition: 0.4s; /* Smooth transition for the slide effect */
+                border-radius: 50%; /* Rounded circle */
+            }
+
+            input:checked + .slider {
+                background-color: rgba(11, 11, 11, 0.75); /* Blue color when activated */
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(20px); /* Move circle to the right */
+            }
+              
         }
 
         .button-container {
