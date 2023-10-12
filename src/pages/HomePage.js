@@ -7,13 +7,11 @@ import { useParams } from "react-router-dom";
 import {
   GoogleMap,
   useJsApiLoader,
-  MarkerClusterer,
-  Marker,
-  InfoWindow,
   OverlayView,
   StandaloneSearchBox,
   MarkerF,
-  InfoWindowF,
+  InfoWindow,
+  MarkerClustererF,
 } from "@react-google-maps/api";
 import LoadingPage from "./LoadingPage";
 import axios from "axios";
@@ -183,7 +181,7 @@ const HomePage = () => {
       });
   }, [searchParams]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (markerClustererRef) {
       markerClustererRef.clearMarkers();
       markerClustererRef.addMarkers(
@@ -195,11 +193,12 @@ const HomePage = () => {
                 lng: marker.longitude,
               },
               id: marker.id,
+              clickable: true,
             })
         )
       );
     }
-  }, [markers])
+  }, [markers]) */
 
   return (
     <div id="home-page">
@@ -350,7 +349,6 @@ const HomePage = () => {
           }}
           id="google-maps"
           onClick={(e) => {
-            /* setShowOverlayView(false); */
             infoWindowRef.close();
             if (codeMode) {
               setCopiedToClipboard(false);
@@ -392,7 +390,20 @@ const HomePage = () => {
               scale: 0.5,
             }}
           />
-          <MarkerClusterer
+          {/* <MarkerF
+            zIndex={10000}
+            key={markers[0].id}
+            position={{ lat: markers[0].lattitude, lng: markers[0].longitude }}
+            // clusterer={clusterer}
+            //Little trick to pass data
+            options={markers[0]}
+            visible={!codeMode}
+            clickable={true}
+            onClick={(m) => {
+              markerClick(m, markers[0].id);
+            }}
+          /> */}
+          <MarkerClustererF
             onLoad={(m) => {
               setMarkerClustererRef(m);
             }}
@@ -405,6 +416,7 @@ const HomePage = () => {
             {(clusterer) =>
               markers.map((marker) => (
                 <MarkerF
+                  zIndex={10000}
                   key={marker.id}
                   position={{ lat: marker.lattitude, lng: marker.longitude }}
                   clusterer={clusterer}
@@ -418,7 +430,7 @@ const HomePage = () => {
                 />
               ))
             }
-          </MarkerClusterer>
+          </MarkerClustererF>
 
           <InfoWindow
             position={overlayPos}
