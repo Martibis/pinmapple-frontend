@@ -54,7 +54,9 @@ const HomePage = () => {
   const [clusterMarkersLoading, setClusterMarkersLoading] = useState(false);
   const [clusterMarkersError, setClusterMarkersError] = useState(null);
 
-  const [searchParams, setSearchParams] = useState({ curated_only: true });
+  const [searchParams, setSearchParams] = useState(
+    params?.username ? { author: params.username } : (params?.permlink ? { permlink: params.permlink } : (params?.tag ? { tags: [params?.tag] } : { curated_only: true }))
+  );
 
   const [showFilters, setShowFilters] = useState(false);
 
