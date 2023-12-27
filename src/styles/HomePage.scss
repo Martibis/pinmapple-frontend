@@ -17,6 +17,7 @@
         border-radius: 5px;
         box-sizing: border-box;
         padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
         input {
             display: block;
@@ -93,6 +94,7 @@
             box-sizing: border-box;
             border-radius: 5px;
             pointer-events: all;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     }
 
@@ -129,7 +131,13 @@
         width: 45%;
         left: 27.5%;
 
+        a {
+            text-decoration: unset;
+            color: unset;
+        }
+
         p {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: inline-flex;
             align-content: center;
             justify-content: center;
@@ -208,6 +216,7 @@ border-radius: 50%; */
         display: flex;
         flex-wrap: wrap;
         gap: 1em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
         .filter-group {
             display: flex;
@@ -247,7 +256,8 @@ border-radius: 50%; */
             }
 
             .switch input {
-                display: none; /* Hide the default checkbox */
+                display: none;
+                /* Hide the default checkbox */
             }
 
             .slider {
@@ -257,9 +267,12 @@ border-radius: 50%; */
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background-color: #ccc; /* Gray color by default */
-                transition: 0.4s; /* Smooth transition for the slide effect */
-                border-radius: 34px; /* Rounded corners */
+                background-color: #ccc;
+                /* Gray color by default */
+                transition: 0.4s;
+                /* Smooth transition for the slide effect */
+                border-radius: 34px;
+                /* Rounded corners */
             }
 
             .slider:before {
@@ -269,19 +282,24 @@ border-radius: 50%; */
                 width: 15px;
                 left: 2px;
                 bottom: 3px;
-                background-color: white; /* White circle by default */
-                transition: 0.4s; /* Smooth transition for the slide effect */
-                border-radius: 50%; /* Rounded circle */
+                background-color: white;
+                /* White circle by default */
+                transition: 0.4s;
+                /* Smooth transition for the slide effect */
+                border-radius: 50%;
+                /* Rounded circle */
             }
 
-            input:checked + .slider {
-                background-color: rgba(11, 11, 11, 0.75); /* Blue color when activated */
+            input:checked+.slider {
+                background-color: rgba(11, 11, 11, 0.75);
+                /* Blue color when activated */
             }
 
-            input:checked + .slider:before {
-                transform: translateX(20px); /* Move circle to the right */
+            input:checked+.slider:before {
+                transform: translateX(20px);
+                /* Move circle to the right */
             }
-              
+
         }
 
         .button-container {
@@ -417,6 +435,68 @@ border-radius: 50%; */
             }
         }
     }
+
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 80%;
+        max-width: 600px;
+        z-index: 101;
+        text-align: center;
+        box-sizing: border-box;
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        a {
+            color: #1e88e5;
+            font-weight: bold;
+        }
+
+        .vote-btn {
+            display: inline-block;
+            background-color: rgba(11, 11, 11, 0.75); // Green color for emphasis
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(11, 11, 11, 1); // Darker green on hover
+            }
+        }
+
+        .close-btn,
+        .no-show-btn {
+            display: inline-block;
+            background-color: #bbb; // Gray color for less emphasis
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            margin: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #a9a9a9; // Darker gray on hover
+            }
+        }
+    }
 }
 
 @media (max-width: 800px) {
@@ -459,6 +539,10 @@ border-radius: 50%; */
             .filler {
                 flex: unset;
             }
+        }
+
+        .popup {
+            width: 90%;
         }
     }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import pinmappleWithText from "../assets/pinmapple-with-text.png";
 import pinmapple from "../assets/pinmapple.png";
 import location from "../assets/location.png";
@@ -18,11 +18,21 @@ import axios from "axios";
 import PostSummary from "../components/PostSummary";
 import ReactTooltip from "react-tooltip";
 import FilterComponent from './../components/FilterComponent';
+import useOutsideClick from "../hooks/useOutsideClick";
+
 
 const libraries = ["places"];
 
 const HomePage = () => {
   const params = useParams();
+
+  const [showPopup, setShowPopup] = useState(true);
+  const handleDoNotShowAgain = () => {
+    localStorage.setItem('hidePopup', 'true');
+    setShowPopup(false);
+  };
+
+
   const [userLocation, setUserLocation] = useState();
   const [codeMode, setCodeMode] = useState(false);
   /* const [showOverlayView, setShowOverlayView] = useState(false); */
@@ -58,6 +68,11 @@ const HomePage = () => {
 
   const [showFilters, setShowFilters] = useState(false);
 
+  const filterRef = useRef();
+  useOutsideClick(filterRef, () => setShowFilters(false));
+
+  const popupRef = useRef();
+  useOutsideClick(popupRef, () => setShowPopup(false));
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
@@ -161,7 +176,6 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    //TODO: make an axios post request to get all markers
     setMarkersLoading(true);
     axios
       .post(
@@ -181,27 +195,25 @@ const HomePage = () => {
       });
   }, [searchParams]);
 
-  /* useEffect(() => {
-    if (markerClustererRef) {
-      markerClustererRef.clearMarkers();
-      markerClustererRef.addMarkers(
-        markers.map(
-          (marker) =>
-            new window.google.maps.Marker({
-              position: {
-                lat: marker.lattitude,
-                lng: marker.longitude,
-              },
-              id: marker.id,
-              clickable: true,
-            })
-        )
-      );
+
+  useEffect(() => {
+    const hidePopup = localStorage.getItem('hidePopup');
+    if (hidePopup === 'true') {
+      setShowPopup(false);
     }
-  }, [markers]) */
+  }, []);
+
 
   return (
     <div id="home-page">
+      {showPopup && (
+        <div className="popup" ref={popupRef}>
+          <p>Your vote shapes Pinmapple's journey.<br />Support the Pinmapple <a href="https://peakd.com/proposals/282" target="_blank" rel="noreferrer">proposal</a>, every bit helps! ❤️</p>
+          <a href="https://peakd.com/proposals/282" target="_blank" rel="noreferrer" className="vote-btn">Vote now</a>
+          <button className="close-btn" onClick={() => setShowPopup(false)}>Close</button>
+          <button className="no-show-btn" onClick={handleDoNotShowAgain}>Do not show again</button>
+        </div>
+      )}
       <div className="pinmapple-with-text">
         <img src={pinmappleWithText} alt="" />
       </div>
@@ -322,14 +334,16 @@ const HomePage = () => {
           </p>
         )}
         <div className="filler"></div>
-        <p id="get-faq" data-tip="Coming soon">
+        {/* <p id="get-faq" data-tip="Coming soon">
           FAQ
         </p>
+         */}
+        <p><a href="https://peakd.com/proposals/282" target="_blank" rel="noreferrer">Vote proposal</a></p>
       </div>
       {
-        showFilters ? (
-          <FilterComponent onFilter={handleFilter} />
-        ) : <></>
+        <div ref={filterRef}>
+          {showFilters && <FilterComponent onFilter={handleFilter} />}
+        </div>
       }
       {
         markersLoading ? <div className="loader-container">
@@ -341,9 +355,6 @@ const HomePage = () => {
       }
       {isLoaded ? (
         <GoogleMap
-          /* onZoomChanged={() => {
-            setShowOverlayView(false);
-          }} */
           onLoad={(m) => {
             setMapRef(m);
           }}

@@ -11,7 +11,7 @@ const PostSummary = (props) => {
             loading="lazy"
           />
         ) : (
-          <p className>No image found</p>
+          <p>No image found</p>
         )}
       </a>
       <div className="post-info">
