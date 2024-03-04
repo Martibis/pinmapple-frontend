@@ -217,10 +217,34 @@ border-radius: 50%; */
         flex-wrap: wrap;
         gap: 1em;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* justify-content: space-between; */
+
+        .date-range-dropdown {
+            select {
+                border: unset;
+                border: 1px solid;
+                display: block;
+                background-image: none;
+                background-color: rgba(255, 255, 255, 0.95);
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+                box-shadow: none;
+                z-index: 1;
+                padding: 5px;
+                font-family: "Quicksand", sans-serif;
+                font-size: 0.9rem;
+                opacity: 0.9;
+                height: 100%;
+                box-sizing: border-box;
+                border-radius: 5px;
+                pointer-events: all;
+            }
+        }
 
         .filter-group {
             display: flex;
             flex-direction: column;
+            width: 47%;
 
             label {
                 font-size: 0.75rem;
@@ -250,9 +274,11 @@ border-radius: 50%; */
             .switch {
                 position: relative;
                 display: inline-block;
+                min-width: 40px;
                 width: 40px;
                 height: 20px;
                 vertical-align: middle;
+                margin-bottom: 0px;
             }
 
             .switch input {
@@ -302,11 +328,19 @@ border-radius: 50%; */
 
         }
 
+        .curated-switch {
+            display: flex;
+            /* flex-direction: row; */
+            /* align-items: center; */
+            justify-content: center;
+            /* gap: 0.2rem; */
+        }
+
         .button-container {
             display: flex;
             gap: 1em;
             align-items: center;
-            justify-content: center;
+            width: 100%;
 
         }
 

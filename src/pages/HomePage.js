@@ -177,6 +177,12 @@ const HomePage = () => {
 
   useEffect(() => {
     setMarkersLoading(true);
+
+    if (markerClustererRef) {
+      markerClustererRef.clearMarkers();
+      markerClustererRef.repaint();
+    }
+
     axios
       .post(
         process.env.REACT_APP_API_BASE_URL + "marker/0/150000",
@@ -185,6 +191,21 @@ const HomePage = () => {
       .then((resp) => {
         console.log(resp.data.length);
         setMarkers(resp.data);
+        if (markerClustererRef) {
+          markerClustererRef.addMarkers(
+            resp.data.map(
+              (marker) =>
+                new window.google.maps.Marker({
+                  position: {
+                    lat: marker.lattitude,
+                    lng: marker.longitude,
+                  },
+                  id: marker.id,
+                })
+            )
+          );
+          markerClustererRef.repaint();
+        }
       })
       .catch((err) => {
         setMarkersError(err);
@@ -193,7 +214,7 @@ const HomePage = () => {
       .finally(() => {
         setMarkersLoading(false);
       });
-  }, [searchParams]);
+  }, [searchParams, markerClustererRef]);
 
 
   useEffect(() => {
@@ -342,7 +363,7 @@ const HomePage = () => {
       </div>
       {
         <div ref={filterRef}>
-          {showFilters && <FilterComponent onFilter={handleFilter} />}
+          {showFilters && <FilterComponent onFilter={handleFilter} searchParams={searchParams} />}
         </div>
       }
       {
